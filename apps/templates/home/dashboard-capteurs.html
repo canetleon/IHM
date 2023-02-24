@@ -1,0 +1,144 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard Project {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<!-- pnotify-custom css -->
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/PNotify.css" rel="stylesheet" type="text/css" />
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/BrightTheme.css" rel="stylesheet" type="text/css" />
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/PNotifyMobile.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotifyMobile.js"></script>
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotifyAnimate.js"></script>
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotify.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/sweetalert2.all.min.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/ac-alert.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/dashboard-project.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/dashboard-capteurs.js"></script>
+<link rel="stylesheet" href="{{ config.ASSETS_ROOT }}/css/plugins/bootstrap-slider.min.css">
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card project-task">
+                                    <div class="card-block">
+                                        <center>
+                                            <div class="card-header">
+
+                                            </div>
+                                            <div class="card-block">
+                                                <form method="POST" action="{{ url_for('process_data') }}">
+                                                    <input type="text" name="my_var">
+                                                    <button type="submit">Send</button>
+                                                </form> 
+
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-block">
+
+                                               
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <center>
+                                    <div class="card">
+                                        
+                                    </div>
+                            </div>
+                            </center>
+
+                            <div class="row">
+                                <div class="col-md-6 col-xl-4">
+                                    <center>
+                                        <div class="card">
+                                            <div class="card-block">
+                                                <div class="btn-group" role="group"
+                                                    aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check bs-tre-button-radio1" name="btnradio" id="btnradio1"
+                                                        autocomplete="off" value="bras maitre" checked />
+                                                    <label class="btn btn-outline-secondary" for="btnradio1">Bras
+                                                        maitre</label>
+
+
+                                                    <input type="radio" class="btn-check bs-tre-button-radio2" name="btnradio" id="btnradio2"
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-secondary"
+                                                        for="btnradio2">Joystick</label>
+
+                                                    <input type="radio" class="btn-check bs-tre-button-radio3" name="btnradio" id="btnradio3"
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-secondary" for="btnradio3">Commande
+                                                        numérique</label>
+                                            </div>
+                                        </div>
+                                    </center>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="card theme-bg">
+                                        
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            
+                                            
+                                        </div>
+                                        <div id="call-chart"></div>
+                                    </div>
+                                </div>
+                            </div>                                
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- [ user Project list ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+
+<!-- apexcharts js -->
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/apexcharts.min.js"></script>
+<!-- dashboard-custom js -->
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/sweetalert2.all.min.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/bootstrap-slider.min.js"></script>
+u
+
+{% endblock javascripts %}

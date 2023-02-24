@@ -1,0 +1,266 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Dashboard Project {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}
+
+<!-- pnotify-custom css -->
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/PNotify.css" rel="stylesheet" type="text/css" />
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/BrightTheme.css" rel="stylesheet" type="text/css" />
+<link href="{{ config.ASSETS_ROOT }}/css/plugins/PNotifyMobile.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotifyMobile.js"></script>
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotifyAnimate.js"></script>
+<script type="text/javascript" src="{{ config.ASSETS_ROOT }}/js/plugins/PNotify.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/sweetalert2.all.min.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/ac-alert.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/dashboard-project.js"></script>
+
+{% endblock stylesheets %}
+
+{% block content %}
+
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card project-task">
+                                    <div class="card-block">
+                                        <center>
+                                            <div class="card-header">
+
+                                                <h5>Mode de commande</h5>
+
+                                            </div>
+                                            <div class="card-block">
+                                                <div class="btn-group" role="group"
+                                                    aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check bs-tre-button-radio1" name="btnradio" id="btnradio1"
+                                                        autocomplete="off" value="bras maitre" checked />
+                                                    <label class="btn btn-outline-secondary" for="btnradio1" onclick="stopLoop('bras_maitre')">Bras
+                                                        maitre</label>
+
+
+                                                    <input type="radio" class="btn-check bs-tre-button-radio2" name="btnradio" id="btnradio2"
+                                                        autocomplete="off" onclick="stopLoop('joystick')">
+                                                    <label class="btn btn-outline-secondary"
+                                                        for="btnradio2">Joystick</label>
+
+                                                    <input type="radio" class="btn-check bs-tre-button-radio3" name="btnradio" id="btnradio3"
+                                                        autocomplete="off">
+                                                    <label class="btn btn-outline-secondary" for="btnradio3" onclick="stopLoop('commande_numerique')">Commande
+                                                        numérique</label>
+                                                        <script>
+                                                            function stopLoop(mode) {
+                                                              fetch('/post-commande', {method: 'POST'});
+                                                              fetch('/post-commande', {
+                                                                        method: 'POST',
+                                                                        mode: 'cors',
+                                                                        headers: {
+                                                                            'Accept': 'application/json',
+                                                                            'Content-Type': 'application/json'
+                                                                        },
+                                                                        body: JSON.stringify({'mode' : mode })
+                                                                    })
+                                                            }
+                                                          </script>
+                                                </div>
+                                            </div>
+                                        </center>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <div class="card">
+                                    <center>
+                                        <div class="card-block">
+                                            <head>
+                                                
+                                            <div class="card-header" id="Statut connexion">
+                                                
+
+                                                <h5>Statut : <i class="fas fa-unlink" style="color:#ff0000"> <t style="color:#000000">Déconnecté</t> </i> <i class="fas fa-unlink" style="color:#FF0000"> </i></h5>
+
+                                            </div>
+                                            <div id="connexion">
+                                                <button class="btn-lg btn-primary bs-tre-button-connexion"><i
+                                                        class="feather icon-power"></i> Connexion</button>
+                                            </div>
+                                            <div id="deconnexion">
+                                                <button class="btn-lg btn-danger bs-tre-button-deconnexion"><i
+                                                        class="feather icon-power"></i> Déconnexion</button>
+                                            </div>
+                                            
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-xl-4">
+                                <center>
+                                    <div class="card">
+                                        <div class="card-header" id="pince">
+
+                                            <h5>Statut Pince : <i class="fas fa-lock" style="color:#ff0000"> <t style="color:#000000">Fermée</t> </i> <i class="fas fa-lock" style="color:#FF0000"> </i></h5>
+
+                                        </div>
+                                        <div id = "ouvrir pince">
+                                        <button class="btn-lg btn-primary button-ouvrir-pince"> Ouvrir Pince <i class="fas fa-lock-open"></i></button>
+                                        </div>
+                                        <div id = "fermer pince">
+                                        <button class="btn-lg btn-primary button-fermer-pince"> Fermer Pince <i class="fas fa-lock"></i></button>
+                                        </div>
+                                        <div class="card-header" id="éclairage">
+                                            <h5>Statut éclairage : <i class="fas fa-lightbulb" style="color:#ff0000"> <t style="color:#000000">OFF</t> </i> <i class="fas fa-lightbulb" style="color:#FF0000"> </i></h5>
+                                        </div>
+                                        <div id = "allumer éclairage">
+                                            <button class="btn-lg btn-primary button-allumer-éclairage"> Allumer éclairage <i class="fas fa-lightbulb" style="color:#00ff00"></i></button>
+                                            </div>
+                                        <div id = "éteindre éclairage">
+                                            <button class="btn-lg btn-primary button-éteindre-éclairage"> Éteindre éclairage <i class="fas fa-lightbulb" style="color:#ff0000"></i></button>
+                                        </div>
+                                    </div>
+                            
+                                </center>
+                        </div>
+                            <div class="row">
+                                <div class="col-6 col-md-4">
+                                    <center>
+                                        <div class="card">
+                                            <div class="card-block">
+                                                <div class="card-header">
+
+                                                    <h5>Stockage</h5>
+
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-icon btn-success stockage1"
+                                                        id="stockage1"><i></i><b>1</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage2"
+                                                        id="stockage2"><i></i><b>2</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage3"
+                                                        id="stockage3"><i></i><b>3</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage4"
+                                                        id="stockage4"><i></i><b>4</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage5"
+                                                        id="stockage5"><i></i><b>5</b></button>
+
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-icon btn-success stockage6"
+                                                        id="stockage6"><i></i><b>6</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage7"
+                                                        id="stockage7"><i></i><b>7</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage8"
+                                                        id="stockage8"><i></i><b>8</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage9"
+                                                        id="stockage9"><i></i><b>9</b></button>
+                                                    <button type="button" class="btn btn-icon btn-success stockage10"
+                                                        id="stockage10"><i></i><b>10</b></button>
+
+                                                </div>
+                                                <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="stockage11"><i><b>11</b></i></button>
+
+                                            </div>
+                                        </div>
+                                    </center>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <div class="card theme-bg">
+                                        <div class="card-header borderless">
+                                            <h5 class="text-white">Timer</h5>
+                                        </div>
+                                        <div class="card-block text-center">
+                                            <h2 class="f-w-300 m-b-30 text-white" id="countup">00:00:00</h2>
+                                            <i class="feather icon-play f-50 text-white d-block m-b-25"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-4">
+                                    <center>
+                                        <div class="card" id="commande numérique" style="display: none;">
+                                            <div class="card-block">
+                                                <div class="card-header">
+
+                                                    <h5>Commande numérique</h5>
+
+                                                </div>
+                                                <div>
+                                                    <h3 class="font-weight-light mt-2"><span id="Mot2"></span>Moteur 2</h3>
+                                                <input id="ex2" data-slider-id='ex1Slider' type="text" data-slider-min="0"
+                                                    data-slider-max="100" data-slider-step="5" data-slider-value="0" />
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction1"><i><b><i class="fas fa-location-arrow fa-flip-horizontal" style="font-size:36px"></i></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction2"><i><b><i class="fas fa-long-arrow-alt-up " style="font-size:36px"></i></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction3"><i><b><i class="fas fa-location-arrow " style="font-size:36px"></i></b></i></button>
+                                                   
+
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction4"><i><b><i class="fas fa-long-arrow-alt-left" style="font-size:36px"></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction5"><i><b><i class="fas fa-expand-arrows-alt" style="font-size:36px"></i></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction6"><i><b><i class="fas fa-long-arrow-alt-right" style="font-size:36px"></i></b></i></button>
+                                                   
+
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction7"><i><b><i class="fas fa-location-arrow fa-rotate-180" style="font-size:36px"></i></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction8"><i><b><i class="fas fa-arrow-alt-circle-down" style="font-size:36px"></i></b></i></button>
+                                                    <button type="button" class="btn-lg btn-icon btn-success stockage11"
+                                                    id="Direction9"><i><b><i class="fas fa-location-arrow fa-flip-vertical" style="font-size:36px"></i></b></i></button>
+                                                   
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </center>
+                                </div>
+                            </div>                                
+                            </div>
+                            
+                        </div>  
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- [ user Project list ] end -->
+        </div>
+        <!-- [ Main Content ] end -->
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+
+{% block javascripts %}
+
+<!-- apexcharts js -->
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/apexcharts.min.js"></script>
+<!-- dashboard-custom js -->
+<script src="{{ config.ASSETS_ROOT }}/js/pages/dashboard-project.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/plugins/sweetalert2.all.min.js"></script>
+<script src="{{ config.ASSETS_ROOT }}/js/pages/ac-rangeslider.js"></script>
+
+{% endblock javascripts %}
