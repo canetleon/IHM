@@ -9,3 +9,8 @@ python3 -m flask run
 #Pour lancer sur son IP
 python -m flask run --host=0.0.0.0
 python -m flask run --host=169.254.212.241
+
+#GIT
+git add .
+git commit -m "modif faite du XX/XX"
+git push -u origin main

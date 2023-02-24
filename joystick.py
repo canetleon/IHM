@@ -34,17 +34,20 @@ def init_joystick(sensibilite):
                                 for axis in data_axis.keys():
                                         change = change or abs(data_axis[axis] - data_axis_old[axis]) > sensibilite
                                 if change:
-                                        r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps(data_axis), headers=headers)
+                                        print(data_axis)
+                                        r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "joystick", "valeur" : data_axis}), headers=headers)
                                         print(r.text)
                                 data_axis_old = data_axis
                         elif events[0].type == pygame.JOYBUTTONDOWN:
                                 event = events[0]
-                                print(events)
-                                r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps({"type" : "buttondown", "valeur" : event.dict}), headers=headers)
+                                
+                                print(json.dumps({"type" : "buttondown", "valeur" : event.dict}))
+                                r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "buttondown", "valeur" : event.dict}), headers=headers)
                                 print(r.text)    
                         elif events[0].type == pygame.JOYBUTTONUP:
                                 event = events[0]
-                                r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps({"type" : "buttonup", "valeur" : event.dict}), headers=headers)
+                                print(json.dumps({"type" : "buttonup", "valeur" : event.dict}))
+                                r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "buttonup", "valeur" : event.dict}), headers=headers)
                                 print(r.text) 
                 
                 if stop_joystick:
@@ -57,7 +60,7 @@ def init_joystick(sensibilite):
                         event = events[i]
                         if event.type == pygame.JOYAXISMOTION: 
                                 
-                                r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps(event.dict), headers=headers)
+                                r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps(event.dict), headers=headers)
                                 print(r.text)
 
                                 

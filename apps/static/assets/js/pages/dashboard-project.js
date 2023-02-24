@@ -596,7 +596,7 @@ function Post(Categorie,Donnes) {
     }
     console.log(requete);
 
-    const url = 'http://169.254.160.48:8000/com/'+Categorie;
+    const url = 'http://serpe.local:8000/com/'+Categorie;
     console.log(url);
     fetch(url, {
     method: 'POST',
@@ -629,7 +629,7 @@ function Post(Categorie,Donnes) {
 function Get() {
 
 
-  fetch('http://159.31.65.235:3100/com', {
+  fetch('http://serpe.local:3100/com', {
   method: 'GET',
   mode: 'cors',
   headers: {

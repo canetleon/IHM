@@ -43,7 +43,7 @@ if DEBUG:
 
 @app.route('/post-commande', methods=['POST'])
 def handle_post_request():
-    # Get the data from the POST request
+ 
     data = request.get_json()
     print('data' + str(data))
     if data != None:
