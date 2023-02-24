@@ -50,11 +50,14 @@ def handle_post_request():
         if data['mode'] == "joystick":
             joystick_thread(0.05)
             print("Restart Joystick")
+        elif data['ip']:
+            
         else:
             kill_joystick()
             print("stop joystick")
         return 'Received POST request'
     return 'error'
+
 
 if __name__ == "__main__":
     app.run()

@@ -1,10 +1,11 @@
 import requests
 import threading
-from time import sleep
+from time import sleep, time
 import os
 import pygame
 import logging
 import json
+
 
 stop_joystick = False
 
@@ -13,17 +14,22 @@ def init_joystick(sensibilite):
         logging.info("Sensibilite Joystick :"+ str(sensibilite))
         os.environ["SDL_VIDEODRIVER"] = "dummy"
         pygame.init()
-        print("1")
+        
         pygame.joystick.init()
         joyController = pygame.joystick.Joystick(0)
         joyController.init()
         logging.info("Thread : starting")
-        print("2")
+             
+
         headers = {'Content-Type': 'application/json', 'Accept':'application/json','Access-Control-Allow-Origin' : '*'}
         data_axis_old = {}
         for i in range(joyController.get_numaxes()):
                                         data_axis_old[f'Axis {i}'] = joyController.get_axis(i)
+
+
+
         while True:
+                
                 events = pygame.event.get()
                 if len(events)>0 :
                         if events[0].type == pygame.JOYAXISMOTION:
@@ -34,20 +40,22 @@ def init_joystick(sensibilite):
                                 for axis in data_axis.keys():
                                         change = change or abs(data_axis[axis] - data_axis_old[axis]) > sensibilite
                                 if change:
-                                        print(data_axis)
-                                        r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "joystick", "valeur" : data_axis}), headers=headers)
+                                        #print(data_axis)
+                                        r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps({"type" : "joystick", "valeur" : data_axis}), headers=headers)
                                         print(r.text)
                                 data_axis_old = data_axis
                         elif events[0].type == pygame.JOYBUTTONDOWN:
+                                
                                 event = events[0]
                                 
                                 print(json.dumps({"type" : "buttondown", "valeur" : event.dict}))
-                                r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "buttondown", "valeur" : event.dict}), headers=headers)
-                                print(r.text)    
+                                r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps({"type" : "buttondown", "valeur" : event.dict}), headers=headers)
+                                print(r.text)
+                                   
                         elif events[0].type == pygame.JOYBUTTONUP:
                                 event = events[0]
                                 print(json.dumps({"type" : "buttonup", "valeur" : event.dict}))
-                                r = requests.post("http://serpe.local:8000/com/joystick", data=json.dumps({"type" : "buttonup", "valeur" : event.dict}), headers=headers)
+                                r = requests.post("http://169.254.160.48:8000/com/joystick", data=json.dumps({"type" : "buttonup", "valeur" : event.dict}), headers=headers)
                                 print(r.text) 
                 
                 if stop_joystick:

@@ -59,63 +59,77 @@ document.querySelector('.bs-tre-button-deconnexion').addEventListener("click", f
 
 //Choix du bouton connexion
 document.querySelector('.bs-tre-button-connexion').addEventListener("click", function () {
-    (async () => {
+  (async () => {
+      
+    Swal.fire({
+      title: 'Configuration de la mission',
+      html:
         
-        const inputOptions = new Promise((resolve) => {
-            setTimeout(() => {
-                resolve({
-                    'opérationnel': 'opérationnel',
-                    'dégradé': 'dégradé',
-                    'test': 'test'
-                })
-            }, 10)
-        })
-        const {
-            value: choix
-        } = await Swal.fire({
-            title: 'Configuration de la mission',
-            html:'<label for="swal-input1">Numéro de la mission :</label>' +
-                 '<input id="swal-input1" class="swal2-input"><br>' +
-                 '<h3>Selectionnez le mode de connexion</h3>',
-            input: 'radio',
-            focusConfirm: false,
-            inputOptions: inputOptions,
-            inputValidator: (value) => {
-                if (!value) {
-                    return 'Vous devez faire un choix'
-                }
-                /*return [
-                    document.getElementById('swal-input1').valueForm,
-                    document.getElementById('swal-input2').valueForm
-                ]*/
-            },
+        '<input id="swal-input1" class="swal2-input" placeholder="Numéro de la mission">' +
+        '<input id="swal-input2" class="swal2-input" placeholder="IP de la raspberry pi"><br>' +
+        '<legend> Selectionnez le mode de connexion :</legend><br>'+
+        '<input type="radio" id="swal-radio1" name="swal-radio" value="opérationnel">' +
+        '<label for="swal-radio1">  Opérationnel    </label>' +
+        '<input type="radio" id="swal-radio2" name="swal-radio" value="dégradé">' +
+        '<label for="swal-radio2">  Dégradé    </label>' +
+        '<input type="radio" id="swal-radio3" name="swal-radio" value="test">' +
+        '<label for="swal-radio2">  Test</label>',
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          document.getElementById('swal-input1').value,
+          document.getElementById('swal-input2').value,
+          document.querySelector('input[name="swal-radio"]:checked').value
+        ]
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const [num_mission, ip_raspb, radioValue] = result.value;
+        /*if (num_mission.value !== "" || ip_raspb.value !== "" || radioValue.value !== "") {
+          console.log("test check value")
+        }*/
+        // Use the input field values and the selected radio input value as required
+        console.log(`Num mission: ${num_mission}, ip raspb: ${ip_raspb}, Radio Value: ${radioValue}`);
+        const choix = radioValue;
+        const IP = ip_raspb;
+        console.log('ip'+ip_raspb)
+        PostIHM(ip_raspb)
+          if (choix == "opérationnel") {
+          Post("connexion",{"mode" : "opérationnel",  "information" : {}})
+          fakeLoad();
+          } else if( choix == "test") {
+              var Statut = "<h5>Statut : <i class=\"fas fa-link\" style=\"color:#00ff00\"> <t style=\"color:#000000\">Connecté</t> </i> <i class=\"fas fa-link\" style=\"color:#00ff00\"> </i></h5>"
+              document.getElementById("Statut connexion").innerHTML = Statut;
+             
+              HideShowConnexion();
+              HideShowDeconnexion();
+              CountUpClock();
 
-        })
-        if (choix) {
-            if (choix == "opérationnel") {
-            Post("connexion",{"mode" : "opérationnel",  "information" : {}})
-            fakeLoad();
-            } else if( choix == "test") {
-                var Statut = "<h5>Statut : <i class=\"fas fa-link\" style=\"color:#00ff00\"> <t style=\"color:#000000\">Connecté</t> </i> <i class=\"fas fa-link\" style=\"color:#00ff00\"> </i></h5>"
-                document.getElementById("Statut connexion").innerHTML = Statut;
-               
-                HideShowConnexion();
-                HideShowDeconnexion();
-                CountUpClock();
+              Post("connexion",{"mode" : "test",  "information" : {}})
+              //Post("Connexion","Information","NumMission",NumMission)
+          } else if( choix == "dégradé") {
+            Post("connexion",{"mode" : "dégradé",  "information" : {}})
+              // à compléter si nécessaire
+          }
+          
+      }
+    })
 
-                Post("connexion",{"mode" : "test",  "information" : {}})
-                //Post("Connexion","Information","NumMission",NumMission)
-            } else if( choix == "dégradé") {
-              Post("connexion",{"mode" : "dégradé",  "information" : {}})
-                // à compléter si nécessaire
-            }
-            }
-
-        if (formValues) {
-            Swal.fire(JSON.stringify(formValues))
-        }
-    })()
+  })()
 });
+
+function PostIHM(IP) {
+  fetch('/post-commande', {method: 'POST'});
+  fetch('/post-commande', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({'mode' : IP })
+        })
+}
 
 
 // Afficher ou Cacher des bouttons
@@ -190,7 +204,7 @@ function HideShowConnexion() {
             var Statut = "<h5>Statut Pince : <i class=\"fas fa-lock-open\" style=\"color:#00ff00\"> <t style=\"color:#000000\">Ouvert</t> </i> <i class=\"fas fa-lock-open\" style=\"color:#00ff00\"> </i></h5>"
 
             document.getElementById("pince").innerHTML = Statut;
-            Post("commande",{"mode" : "", "commande_numerique" : {"ouvrir_pince" : true, "fermer_pince" : false}})
+            Post("commande",{"mode" : "", "commande_numerique" : {"pince" : true}})
             HideShowBoutonFermerPince();
             HideShowBoutonOuvrirPince();
         }
@@ -214,11 +228,15 @@ document.querySelector('.button-fermer-pince').addEventListener("click", functio
             var Statut = "<h5>Statut Pince : <i class=\"fas fa-lock\" style=\"color:#ff0000\"> <t style=\"color:#000000\">Fermée</t> </i> <i class=\"fas fa-lock\" style=\"color:#FF0000\"> </i></h5>"
 
             document.getElementById("pince").innerHTML = Statut;
-            Post("commande",{"mode" : "", "commande_numerique" : {"fermer_pince" : true, "ouvrir_pince" : false}})
+            Post("commande",{"mode" : "", "commande_numerique" : {"pince" : false}})
             HideShowBoutonFermerPince();
             HideShowBoutonOuvrirPince();
         }
       })
+});
+
+document.querySelector('.button-stoper-pince').addEventListener("click", function () {
+  Post("commande",{"mode" : "", "commande_numerique" : {"pince_stop" : true}})
 });
 
 // Allumer Éclairage
