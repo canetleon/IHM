@@ -3,9 +3,8 @@ HideShowDeconnexion();
 HideShowBoutonFermerPince();
 HideShowBoutonEteindreEclairage();
 
-//var Statut;
-//import { Post } from "./comm_rasp"
 
+//initialisation des variables
 stockage1 = true;
 stockage2 = true;
 stockage3 = true;
@@ -92,7 +91,7 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
         console.log(`Num mission: ${num_mission}, ip raspb: ${ip_raspb}, Radio Value: ${radioValue}`);
         const choix = radioValue;
         const IP = ip_raspb;
-        console.log('ip'+ip_raspb)
+        console.log('ip : '+ip_raspb)
         PostIHM(ip_raspb)
           if (choix == "opérationnel") {
           Post("connexion",{"mode" : "opérationnel",  "information" : {}})
@@ -118,16 +117,161 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
   })()
 });
 
+//Boutton testant toutes les requête vers la raspberry pi
+document.querySelector('.bs-tre-button-test-connexion').addEventListener("click", function () {
+  Test_connexion_mode_deconnexion = false
+  Test_connexion_mode_opérationnel = false
+  Test_connexion_mode_test = false
+  Test_connexion_mode_dégradé = false
+  Test_commande_numerique_pince_true = false
+  Test_commande_numerique_pince_false = false
+  Test_commande_numerique_pince_stop = false
+  Test_commande_numerique_eclairage_true = false
+  Test_commande_numerique_eclairage_false = false
+  Test_stockage_echantillon = false
+  Test_stockage_1= false
+  Test_stockage_2= false
+  Test_stockage_3= false
+  Test_stockage_4= false
+  Test_stockage_5= false
+  Test_stockage_6= false
+  Test_stockage_7= false
+  Test_stockage_8= false
+  Test_stockage_9= false
+  Test_stockage_10= false
+  
+  Test_commande_commande_numerique = false
+  Test_commande_joystick = false
+  Test_commande_bras_maitre = false
+
+console.log('test connexion')
+async function testpost() {
+//initialisation de toutes les variables
+const valeur_Test_connexion_mode_deconnexion = await PostTest("connexion",{"mode" : "deconnexion", "information" : {}});
+const valeur_Test_connexion_mode_opérationnel = await PostTest("connexion",{"mode" : "opérationnel",  "information" : {}});
+const valeur_Test_connexion_mode_test = await PostTest("connexion",{"mode" : "test",  "information" : {}});
+const valeur_Test_connexion_mode_dégradé = await PostTest("connexion",{"mode" : "dégradé",  "information" : {}});
+const valeur_Test_commande_numerique_pince_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : true}});
+const valeur_Test_commande_numerique_pince_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : false}});
+const valeur_Test_commande_numerique_pince_stop =await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince_stop" : true}});
+const valeur_Test_commande_numerique_eclairage_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : true}});
+const valeur_Test_commande_numerique_eclairage_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : false}});
+const valeur_Test_stockage_echantillon = await PostTest("stockage",{"nouveau_stockage" : "echantillon1", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_1 = await PostTest("stockage",{"nouveau_stockage" : "frotti1", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_2 = await PostTest("stockage",{"nouveau_stockage" : "frotti2", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_3 = await PostTest("stockage",{"nouveau_stockage" : "frotti3", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_4 = await PostTest("stockage",{"nouveau_stockage" : "frotti4", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_5 = await PostTest("stockage",{"nouveau_stockage" : "frotti5", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_6 = await PostTest("stockage",{"nouveau_stockage" : "frotti6", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_7 = await PostTest("stockage",{"nouveau_stockage" : "frotti7", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_8 = await PostTest("stockage",{"nouveau_stockage" : "frotti8", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "frotti1", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_10 = await PostTest("stockage",{"nouveau_stockage" : "frotti10", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_commande_commande_numerique = await PostTest("commande",{"mode" : "commande_numerique", "commande_numerique" : {}});
+const valeur_Test_commande_joystick = await PostTest("commande",{"mode" : "joystick", "commande_numerique" : {}});
+const valeur_Test_commande_bras_maitre = await PostTest("commande",{"mode" : "bras_maitre", "commande_numerique" : {}});
+
+
+Test_connexion_mode_deconnexion = (valeur_Test_connexion_mode_deconnexion == "ok");
+Test_connexion_mode_opérationnel = (valeur_Test_connexion_mode_opérationnel == "ok");
+Test_connexion_mode_test = (valeur_Test_connexion_mode_test == "ok")
+Test_connexion_mode_dégradé = (valeur_Test_connexion_mode_dégradé == "ok")
+Test_commande_numerique_pince_true = (valeur_Test_commande_numerique_pince_true == "ok")
+Test_commande_numerique_pince_false = (valeur_Test_commande_numerique_pince_false == "ok")
+Test_commande_numerique_pince_stop = (valeur_Test_commande_numerique_pince_stop== "ok")
+Test_commande_numerique_eclairage_true = (valeur_Test_commande_numerique_eclairage_true == "ok")
+Test_commande_numerique_eclairage_false = (valeur_Test_commande_numerique_eclairage_false == "ok")
+Test_stockage_echantillon  = (valeur_Test_stockage_echantillon  == "ok")
+Test_stockage_1 = (valeur_Test_stockage_1 == "ok")
+Test_stockage_2 = (valeur_Test_stockage_2 == "ok")
+Test_stockage_3 = (valeur_Test_stockage_3 == "ok")
+Test_stockage_4 = (valeur_Test_stockage_4 == "ok")
+Test_stockage_5 = (valeur_Test_stockage_5 == "ok")
+Test_stockage_6 = (valeur_Test_stockage_6 == "ok")
+Test_stockage_7 = (valeur_Test_stockage_7 == "ok")
+Test_stockage_8 = (valeur_Test_stockage_8 == "ok")
+Test_stockage_9 = (valeur_Test_stockage_9 == "ok")
+Test_stockage_10 = (valeur_Test_stockage_10 == "ok")
+Test_commande_commande_numerique  = (valeur_Test_commande_commande_numerique  == "ok")
+Test_commande_joystick = (valeur_Test_commande_joystick == "ok")
+Test_commande_bras_maitre = (valeur_Test_commande_bras_maitre == "ok")
+if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel == true && Test_connexion_mode_test == true
+  && Test_connexion_mode_dégradé == true && Test_commande_numerique_pince_true == true && Test_commande_numerique_pince_false == true
+  && Test_commande_numerique_pince_stop == true && Test_commande_numerique_eclairage_true == true && Test_commande_numerique_eclairage_false == true
+  && Test_stockage_echantillon == true && Test_commande_commande_numerique == true && Test_commande_joystick == true && Test_commande_bras_maitre == true
+  && Test_stockage_1 == true && Test_stockage_2 == true && Test_stockage_3 == true && Test_stockage_4 == true && Test_stockage_5 == true && Test_stockage_6 == true
+  && Test_stockage_7 == true && Test_stockage_8 == true && Test_stockage_9 == true && Test_stockage_10 == true){
+    console.log("Tout est ok")
+  } else {
+    console.log("Tout est PAS ok")
+  }
+
+}
+testpost();
+
+
+/*if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel == true && Test_connexion_mode_test == true
+  && Test_connexion_mode_dégradé == true && Test_commande_numerique_pince_true == true && Test_commande_numerique_pince_false == true
+  && Test_commande_numerique_pince_stop == true && Test_commande_numerique_eclairage_true == true && Test_commande_numerique_eclairage_false == true
+  && Test_stockage_echantillon == true && Test_commande_commande_numerique == true && Test_commande_joystick == true && Test_commande_bras_maitre == true){
+    for (let i = 0; i < 10; i++) {
+      if (Test_stockage_[i] == true) {
+        console.log("Tout est ok")
+      } else {
+        console.log("Tout est ok sauf le stockage")
+      }
+}
+} else {
+  console.log("Pb dans l'une des requête")
+}*/
+
+});
+
+
+//fonction qui reçoit l'ip lors de la connexion et la remplace dans le run.py
 function PostIHM(IP) {
-  fetch('/post-commande', {method: 'POST'});
-  fetch('/post-commande', {
+  fetch('/post-ip', {method: 'POST'});
+  fetch('/post-ip', {
             method: 'POST',
             mode: 'cors',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({'mode' : IP })
+            body: JSON.stringify({'ip' : IP })
         })
 }
 
@@ -515,6 +659,23 @@ document.querySelector('.stockage1').addEventListener("click", function () {
   }
 });
 
+document.querySelector('.bras-maitre-commande').addEventListener("click", function () {
+
+  
+    console.log("bras maitre commande")  
+      fetch('/post-bras-maitre', {method: 'POST'});
+      fetch('/post-bras-maitre', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({'bras maitre commande' : 'go'})
+            })
+
+});
+
 
 function CountUpClock() {
 
@@ -550,6 +711,15 @@ document.querySelector('.bs-tre-button-radio3').addEventListener("click", functi
     x.style.display = "none";
     HideShowCommandeNumerique();
   }
+  var y = document.getElementById("commande bras maitre");
+  if (y.style.display === "none") {
+    y.style.display = "block";
+    HideShowCommandeBrasMaitre();
+    
+  } else {
+    y.style.display = "none";
+    
+  }
 
   
 
@@ -566,6 +736,16 @@ document.querySelector('.bs-tre-button-radio2').addEventListener("click", functi
     x.style.display = "none";
   }
 
+  var y = document.getElementById("commande bras maitre");
+  if (y.style.display === "none") {
+    y.style.display = "block";
+    HideShowCommandeBrasMaitre();
+  } else {
+    y.style.display = "none";
+    
+  }
+
+
 
 });
 
@@ -578,7 +758,19 @@ document.querySelector('.bs-tre-button-radio1').addEventListener("click", functi
     HideShowCommandeNumerique();
   } else {
     x.style.display = "none";
+    
   }
+
+  var y = document.getElementById("commande bras maitre");
+  if (y.style.display === "none") {
+    y.style.display = "block";
+    
+
+  } else {
+    y.style.display = "none";
+    HideShowCommandeBrasMaitre();
+  }
+
 
 
 });
@@ -587,6 +779,16 @@ function HideShowCommandeNumerique() {
 
   
   var x = document.getElementById("commande numérique");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+function HideShowCommandeBrasMaitre() {
+
+  
+  var x = document.getElementById("commande bras maitre");
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
@@ -641,6 +843,43 @@ function Post(Categorie,Donnes) {
   }
   )
     
+}
+
+//fonction POST test
+function PostTest(Categorie,Donnes) {
+  console.log("fct post test " + Categorie )
+  console.log(Donnes)
+
+  let requete = {}
+
+    if (Categorie == "stockage") {
+      requete = {"nouveau_stockage" : Donnes.nouveau_stockage, "emplacement" : Donnes.emplacement}
+    } else if (Categorie == "commande") {     
+      requete = {"mode" : Donnes.mode, "commande_numerique" : Donnes.commande_numerique}
+    } else if (Categorie == "connexion") {
+      requete = {"mode" : Donnes.mode, "information" : Donnes.information}
+    } else {
+      requete = {"Error" : "Error"}
+    }
+    console.log(requete);
+
+    const url = 'http://serpe.local:8000/test/'+Categorie;
+    console.log(url);
+    value = fetch(url, {
+    method: 'POST',
+    mode: 'cors',
+    headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requete)
+  })
+  .then(response => response.json())
+  .then(response => { 
+    return response.status
+  }
+  )
+   return value 
 }
 
 // fonction get pour récup les infos de la raspberry

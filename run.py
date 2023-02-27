@@ -12,7 +12,8 @@ from   sys import exit
 import requests
 from apps.config import config_dict
 from apps import create_app, db
-from joystick import joystick_thread, kill_joystick
+from joystick import joystick_thread, kill_joystick, get_ip_rasp
+from Brasmaitre import lance_bras_maitre
 
 
 # WARNING: Don't run with debug turned on in production!
@@ -42,7 +43,7 @@ if DEBUG:
     app.logger.info('ASSETS_ROOT      = ' + app_config.ASSETS_ROOT )
 
 @app.route('/post-commande', methods=['POST'])
-def handle_post_request():
+def handle_post_request_commande():
  
     data = request.get_json()
     print('data' + str(data))
@@ -50,13 +51,30 @@ def handle_post_request():
         if data['mode'] == "joystick":
             joystick_thread(0.05)
             print("Restart Joystick")
-        elif data['ip']:
-            
         else:
             kill_joystick()
             print("stop joystick")
         return 'Received POST request'
     return 'error'
+
+@app.route('/post-ip', methods=['POST'])
+def handle_post_request_IP():
+ 
+    dataip = request.get_json()
+    if dataip != None:
+        print("IP RASP : "+ dataip['ip'])
+        get_ip_rasp(dataip['ip'])
+        return 'Received POST IP request'
+    return 'error'
+
+@app.route('/post-bras-maitre', methods=['POST'])
+def handle_post_request_Bras_maitre():
+    data_bras = request.get_json()
+    if data_bras != None:
+        lance_bras_maitre()
+        return 'Received POST bras maitre request'
+    return 'error'
+
 
 
 if __name__ == "__main__":

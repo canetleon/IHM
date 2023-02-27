@@ -32,7 +32,7 @@
                                     {{ form.hidden_tag() }}
 
                                     <div class="input-group mb-3">
-                                        {{ form.username(placeholder="Adresse mail", class="form-control") }}
+                                        {{ form.username(placeholder="Nom d'utilisateur", class="form-control") }}
                                     </div>
                                     <div class="input-group mb-4">
                                         {{ form.password(placeholder="Mot de passe", class="form-control", type="password") }}
@@ -45,7 +45,7 @@
                                 <!--<p class="mb-1 text-muted">Don’t have an account? <a href="{{ url_for('authentication_blueprint.register') }}" >Sign UP</a></p>-->
 
                                 <br />
-
+                                <p class="mb-1 text-muted">Vous n'avez pas de compte <a href="{{ url_for('authentication_blueprint.register') }}" >Register</a></p>
                                 <p class="mb-2 text-muted">
                                     
                                      <a target="_blank" 
