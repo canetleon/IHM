@@ -1,5 +1,6 @@
 
 HideShowDeconnexion();
+HideShowConnexion();
 HideShowBoutonFermerPince();
 HideShowBoutonEteindreEclairage();
 
@@ -66,7 +67,7 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
       html:
         
         '<input id="swal-input1" class="swal2-input" placeholder="Numéro de la mission">' +
-        '<input id="swal-input2" class="swal2-input" placeholder="IP de la raspberry pi"><br>' +
+        '<input id="swal-input2" class="swal2-input" placeholder="IP de la raspberry pi" value="169.254.160.48"><br>' +
         '<legend> Selectionnez le mode de connexion :</legend><br>'+
         '<input type="radio" id="swal-radio1" name="swal-radio" value="opérationnel">' +
         '<label for="swal-radio1">  Opérationnel    </label>' +
@@ -114,6 +115,7 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
                 showConfirmButton: false,
                 timer: 1500
               })
+              EnableAll();
               //Post("Connexion","Information","NumMission",NumMission)
           } else if( choix == "dégradé") {
             Post("connexion",{"mode" : "dégradé",  "information" : {}})
@@ -125,9 +127,9 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
 
   })()
 });
-
 //Boutton testant toutes les requête vers la raspberry pi
 document.querySelector('.bs-tre-button-test-connexion').addEventListener("click", function () {
+  
   Test_connexion_mode_deconnexion = false
   Test_connexion_mode_opérationnel = false
   Test_connexion_mode_test = false
@@ -153,8 +155,9 @@ document.querySelector('.bs-tre-button-test-connexion').addEventListener("click"
   Test_commande_joystick = false
   Test_commande_bras_maitre = false
 
-console.log('test connexion')
+console.log('test connexion 2')
 async function testpost() {
+
 //initialisation de toutes les variables
 const valeur_Test_connexion_mode_deconnexion = await PostTest("connexion",{"mode" : "deconnexion", "information" : {}});
 const valeur_Test_connexion_mode_opérationnel = await PostTest("connexion",{"mode" : "opérationnel",  "information" : {}});
@@ -201,11 +204,14 @@ const valeur_Test_stockage_8 = await PostTest("stockage",{"nouveau_stockage" : "
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "frotti1", "emplacement" : {"stockage1" : stockage1, 
+const valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "frotti9", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_10 = await u
+const valeur_Test_stockage_10 = await PostTest("stockage",{"nouveau_stockage" : "frotti10", "emplacement" : {"stockage1" : stockage1, 
+"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
+"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
+"stockage10" : stockage10, "stockage11" : stockage11}});
 const valeur_Test_commande_commande_numerique = await PostTest("commande",{"mode" : "commande_numerique", "commande_numerique" : {}});
 const valeur_Test_commande_joystick = await PostTest("commande",{"mode" : "joystick", "commande_numerique" : {}});
 const valeur_Test_commande_bras_maitre = await PostTest("commande",{"mode" : "bras_maitre", "commande_numerique" : {}});
@@ -241,6 +247,7 @@ if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel
   && Test_stockage_1 == true && Test_stockage_2 == true && Test_stockage_3 == true && Test_stockage_4 == true && Test_stockage_5 == true && Test_stockage_6 == true
   && Test_stockage_7 == true && Test_stockage_8 == true && Test_stockage_9 == true && Test_stockage_10 == true){
     console.log("Tout est ok")
+    HideShowConnexion();
     Swal.fire({
       position: 'top-end',
       icon: 'success',
@@ -249,11 +256,13 @@ if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel
       timer: 1500
     })
   } else {
+
     console.log("Tout est PAS ok")
                Swal.fire({
                 position: 'top-end',
                 icon: 'error',
-                title: 'Vous avez été déconnecté avec succès',
+                title: 'Toutes les trames n\'ont pas été envoyé avec succès',
+                text : "",
                 showConfirmButton: false,
                 timer: 1500
               })
@@ -793,6 +802,16 @@ document.querySelector('.bs-tre-button-radio3').addEventListener("click", functi
     y.style.display = "none";
     
   }
+
+  var z = document.getElementById("button joystick");
+  if (z.style.display === "none") {
+    z.style.display = "block";
+    HideShowCommandeButtonJoystick()
+  } else {
+    z.style.display = "none";
+    
+  }
+
   Swal.fire({
     position: 'top-end',
     icon: 'success',
@@ -824,6 +843,15 @@ document.querySelector('.bs-tre-button-radio2').addEventListener("click", functi
   } else {
     y.style.display = "none";
     
+  }
+
+  var z = document.getElementById("button joystick");
+  if (z.style.display === "none") {
+    z.style.display = "block";
+    
+  } else {
+    z.style.display = "none";
+    HideShowCommandeButtonJoystick()
   }
 
   Swal.fire({
@@ -858,6 +886,16 @@ document.querySelector('.bs-tre-button-radio1').addEventListener("click", functi
     y.style.display = "none";
     HideShowCommandeBrasMaitre();
   }
+
+  var z = document.getElementById("button joystick");
+  if (z.style.display === "none") {
+    z.style.display = "block";
+    HideShowCommandeButtonJoystick()
+  } else {
+    z.style.display = "none";
+    
+  }
+
   Swal.fire({
     position: 'top-end',
     icon: 'success',
@@ -885,6 +923,17 @@ function HideShowCommandeBrasMaitre() {
 
   
   var x = document.getElementById("commande bras maitre");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+}
+
+function HideShowCommandeButtonJoystick() {
+
+  
+  var x = document.getElementById("button joystick");
   if (x.style.display === "none") {
     x.style.display = "block";
   } else {
@@ -998,6 +1047,34 @@ function Get() {
 }
 )
   
+}
+
+function EnableAll() {
+  document.getElementById('btnradio1').disabled = false;
+  document.getElementById('btnradio2').disabled = false;
+  document.getElementById('btnradio3').disabled = false;
+  document.getElementById('btnradio_articulation').disabled = false;
+  document.getElementById('btnradio_vitesse').disabled = false;
+  document.getElementById('bouton ouvrir pince').disabled = false;
+  document.getElementById('bouton fermer pince').disabled = false;
+  document.getElementById('bouton stop pince').disabled = false;
+  document.getElementById('bouton allumer éclairage').disabled = false;
+  document.getElementById('bouton éteindre éclairage').disabled = false;
+  document.getElementById('stockage1').disabled = false;
+  document.getElementById('stockage2').disabled = false;
+  document.getElementById('stockage3').disabled = false;
+  document.getElementById('stockage4').disabled = false;
+  document.getElementById('stockage5').disabled = false;
+  document.getElementById('stockage6').disabled = false;
+  document.getElementById('stockage7').disabled = false;
+  document.getElementById('stockage8').disabled = false;
+  document.getElementById('stockage9').disabled = false;
+  document.getElementById('stockage10').disabled = false;
+  document.getElementById('stockage11').disabled = false;
+  document.getElementById('Button bras maitre envoie').disabled = false;
+
+
+
 }
 
 

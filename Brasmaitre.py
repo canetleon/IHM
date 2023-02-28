@@ -10,8 +10,8 @@ import json
 
 def lance_bras_maitre():
 
-    global ip_rasp
-    
+    #global ip_rasp
+    ip_rasp = "169.254.160.48"
     ser = serial.Serial('COM5', 9600, bytesize=8, timeout=2, stopbits=serial.STOPBITS_ONE)
     Phrase = []
     i = 0
@@ -32,8 +32,8 @@ def lance_bras_maitre():
                 i = 0
 
                 headers = {'Content-Type': 'application/json', 'Accept':'application/json','Access-Control-Allow-Origin' : '*'}
-                data=json.dumps({"type" : "bras_maitre", "valeur" : {"Base" : Phrase[0], "S1" : Phrase[1] , "S2" : Phrase[2] , "S3" : Phrase[3] , "S4" : Phrase[4] , "S5" : Phrase[5] , "Pince" : Phrase[6] }})
-                #r = requests.post("http://"+ip_rasp+":8000/com/joystick", data , headers=headers)
+                data=json.dumps({"mode" : "bras_maitre", "valeur" : {"Base" : Phrase[0], "S1" : Phrase[1] , "S2" : Phrase[2] , "S3" : Phrase[3] , "S4" : Phrase[4] , "S5" : Phrase[5] , "Pince" : Phrase[6] }})
+                r = requests.post("http://"+ip_rasp+":8000/com/joystick", data , headers=headers)
                 print(data)
 
                 Phrase.clear()

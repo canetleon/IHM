@@ -9,12 +9,11 @@ import json
 
 stop_joystick = False
 
-def init_joystick(sensibilite):
+def init_joystick(sensibilite,mode_joystick):
+        print('mode joystick : '+ mode_joystick)
         global stop_joystick
         global ip_rasp
-        print('ip rasp global : '+ip_rasp)
-        #ip_rasp = get_ip_rasp   
-        #print('ip rasp global def fct : '+ip_rasp)  
+        print('ip rasp global : '+ip_rasp) 
         
         logging.info("Sensibilite Joystick :"+ str(sensibilite))
 
@@ -47,7 +46,7 @@ def init_joystick(sensibilite):
                                         change = change or abs(data_axis[axis] - data_axis_old[axis]) > sensibilite
                                 if change:
                                         #print(data_axis)
-                                        r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"type" : "joystick", "valeur" : data_axis}), headers=headers)
+                                        r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"mode" : mode_joystick, "type" : "joystick", "valeur" : data_axis}), headers=headers)
                                         print(r)
                                         print(r.text)
                                 data_axis_old = data_axis
@@ -97,10 +96,10 @@ def init_joystick(sensibilite):
         #print(r.text)
         #sleep(2)
 
-def joystick_thread(sensibilite = 0.05):
+def joystick_thread(sensibilite = 0.05, mode_joystick = 'articulation'):
         global stop_joystick
         stop_joystick = False
-        x = threading.Thread(target=init_joystick, args=[sensibilite])
+        x = threading.Thread(target=init_joystick, args=[sensibilite,mode_joystick])
 
 
         format = "%(asctime)s: %(message)s"
@@ -112,6 +111,7 @@ def joystick_thread(sensibilite = 0.05):
 
 def kill_joystick():
         joyController = pygame.joystick.Joystick(0)
+        print('thread stopping')
         global stop_joystick
         stop_joystick = True
         joyController.quit()

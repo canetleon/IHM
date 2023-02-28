@@ -42,17 +42,17 @@
                                                 <div class="btn-group" role="group"
                                                     aria-label="Basic radio toggle button group">
                                                     <input type="radio" class="btn-check bs-tre-button-radio1" name="btnradio" id="btnradio1"
-                                                        autocomplete="off" value="bras maitre" checked />
+                                                        autocomplete="off" value="bras maitre" checked disabled />
                                                     <label class="btn btn-outline-secondary" for="btnradio1" onclick="stopLoop('bras_maitre')">Bras
                                                         maitre</label>
 
 
-                                                    <input type="radio" class="btn-check bs-tre-button-radio2" name="btnradio" id="btnradio2"
+                                                    <input type="radio" class="btn-check bs-tre-button-radio2" name="btnradio" id="btnradio2" disabled
                                                         autocomplete="off" onclick="stopLoop('joystick')">
                                                     <label class="btn btn-outline-secondary"
                                                         for="btnradio2">Joystick vitesse</label>
                                                         
-                                                    <input type="radio" class="btn-check bs-tre-button-radio3" name="btnradio" id="btnradio3"
+                                                    <input type="radio" class="btn-check bs-tre-button-radio3" name="btnradio" id="btnradio3" disabled
                                                         autocomplete="off">
                                                     <label class="btn btn-outline-secondary" for="btnradio3" onclick="stopLoop('commande_numerique')">Commande
                                                         numérique</label>
@@ -72,6 +72,20 @@
                                                           </script>
                                                 </div>
                                             </div>
+
+                                            <div class="card-block joystick" id="button joystick" style="display: none;">
+                                                <div class="btn-group joystick" role="group" >
+                                                    <input type="radio" class="btn-check bs-tre-button-radio-joystick-articulation" name="btnradio_joystick" id="btnradio_articulation"
+                                                    disabled  >
+                                                    <label class="btn btn-outline-secondary" for="btnradio_articulation" onclick="stopLoop('articulation')"> 
+                                                        Joystick Articulation</label>
+
+
+                                                    <input type="radio" class="btn-check bs-tre-button-radio-joystick-vitesse" name="btnradio_joystick" id="btnradio_vitesse" disabled>
+                                                    <label class="btn btn-outline-secondary" for="btnradio_vitesse" onclick="stopLoop('vitesse')">
+                                                        Joystick vitesse</label>
+
+                                                 </div>
                                         </center>
                                     </div>
                                 </div>
@@ -113,22 +127,22 @@
 
                                         </div>
                                         <div id = "ouvrir pince">
-                                        <button class="btn-lg btn-primary button-ouvrir-pince"> Ouvrir Pince <i class="fas fa-lock-open"></i></button>
+                                        <button class="btn-lg btn-primary button-ouvrir-pince" id = "bouton ouvrir pince" disabled> Ouvrir Pince <i class="fas fa-lock-open"></i></button>
                                         </div>
                                         <div id = "fermer pince">
-                                        <button class="btn-lg btn-primary button-fermer-pince"> Fermer Pince <i class="fas fa-lock"></i></button>
+                                        <button class="btn-lg btn-primary button-fermer-pince" id = "bouton fermer pince" disabled> Fermer Pince <i class="fas fa-lock"></i></button>
                                         </div>
                                         <div id = "STOP">
-                                            <button class="btn-lg btn-primary button-stoper-pince"> Stop Pince <i class="fa fa-stop-circle" style="font-size:22px"></i></button>
+                                            <button class="btn-lg btn-primary button-stoper-pince" id = "bouton stop pince" disabled> Stop Pince <i class="fa fa-stop-circle" style="font-size:22px"></i></button>
                                             </div>
                                         <div class="card-header" id="éclairage">
                                             <h5>Statut éclairage : <i class="fas fa-lightbulb" style="color:#ff0000"> <t style="color:#000000">OFF</t> </i> <i class="fas fa-lightbulb" style="color:#FF0000"> </i></h5>
                                         </div>
                                         <div id = "allumer éclairage">
-                                            <button class="btn-lg btn-primary button-allumer-éclairage"> Allumer éclairage <i class="fas fa-lightbulb" style="color:#00ff00"></i></button>
+                                            <button class="btn-lg btn-primary button-allumer-éclairage" id = "bouton allumer éclairage" disabled> Allumer éclairage <i class="fas fa-lightbulb" style="color:#00ff00"></i></button>
                                             </div>
                                         <div id = "éteindre éclairage">
-                                            <button class="btn-lg btn-primary button-éteindre-éclairage"> Éteindre éclairage <i class="fas fa-lightbulb" style="color:#ff0000"></i></button>
+                                            <button class="btn-lg btn-primary button-éteindre-éclairage" id = "bouton éteindre éclairage" disabled> Éteindre éclairage <i class="fas fa-lightbulb" style="color:#ff0000"></i></button>
                                         </div>
                                     </div>
                             
@@ -146,32 +160,32 @@
                                                 </div>
                                                 <div>
                                                     <button type="button" class="btn btn-icon btn-success stockage1"
-                                                        id="stockage1"><i></i><b>1</b></button>
+                                                        id="stockage1" disabled><i></i><b>1</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage2"
-                                                        id="stockage2"><i></i><b>2</b></button>
+                                                        id="stockage2" disabled><i></i><b>2</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage3"
-                                                        id="stockage3"><i></i><b>3</b></button>
+                                                        id="stockage3" disabled><i></i><b>3</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage4"
-                                                        id="stockage4"><i></i><b>4</b></button>
+                                                        id="stockage4" disabled><i></i><b>4</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage5"
-                                                        id="stockage5"><i></i><b>5</b></button>
+                                                        id="stockage5" disabled><i></i><b>5</b></button>
 
                                                 </div>
                                                 <div>
                                                     <button type="button" class="btn btn-icon btn-success stockage6"
-                                                        id="stockage6"><i></i><b>6</b></button>
+                                                        id="stockage6" disabled><i></i><b>6</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage7"
-                                                        id="stockage7"><i></i><b>7</b></button>
+                                                        id="stockage7" disabled><i></i><b>7</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage8"
-                                                        id="stockage8"><i></i><b>8</b></button>
+                                                        id="stockage8" disabled><i></i><b>8</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage9"
-                                                        id="stockage9"><i></i><b>9</b></button>
+                                                        id="stockage9" disabled><i></i><b>9</b></button>
                                                     <button type="button" class="btn btn-icon btn-success stockage10"
-                                                        id="stockage10"><i></i><b>10</b></button>
+                                                        id="stockage10" disabled><i></i><b>10</b></button>
 
                                                 </div>
                                                 <button type="button" class="btn-lg btn-icon btn-success stockage11"
-                                                    id="stockage11"><i><b>11</b></i></button>
+                                                    id="stockage11" disabled><i><b>11</b></i></button>
 
                                             </div>
                                         </div>
@@ -239,7 +253,7 @@
 
                                                 </div>
                                             <button type="button" class="btn-lg btn-icon btn-success bras-maitre-commande"
-                                                    id="Direction9"><i><b><i class="fas fa-project-diagram" style="font-size:20px"></i>   
+                                                    id="Button bras maitre envoie" disabled><i><b><i class="fas fa-project-diagram" style="font-size:20px"></i>   
                                                                           <i class="fas fa-forward" style="font-size:15px"></i>    
                                                                           <i class="fas fa-project-diagram" style="font-size:36px"></i></b></i></button>
                                         </div>

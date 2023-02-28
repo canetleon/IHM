@@ -12,6 +12,9 @@ python -m flask run --host=0.0.0.0
 #Pour lancer sur une IP particulière
 python -m flask run --host=169.254.212.241
 
+#IP de la RASP
+169.254.160.48
+
 #GIT
 git add .
 git commit -m "modif faite du XX/XX"

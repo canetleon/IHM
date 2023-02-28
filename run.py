@@ -48,8 +48,23 @@ def handle_post_request_commande():
     data = request.get_json()
     print('data' + str(data))
     if data != None:
-        if data['mode'] == "joystick":
-            joystick_thread(0.05)
+        if data['mode'] == "vitesse":
+            try:   
+                kill_joystick()
+            except Exception as e:
+                print(str(e))
+            joystick_thread(0.05,'vitesse')
+            joystick_thread(0.05,'vitesse')
+            print("Restart Joystick vitesse")
+        elif data['mode'] == "articulation":
+            try:   
+                kill_joystick()
+            except Exception as e:
+                print(str(e))
+            joystick_thread(0.05,'articulation')
+            joystick_thread(0.05,'articulation')
+            print("Restart Joystick articulation")
+        elif data['mode'] == "joystick":
             print("Restart Joystick")
         else:
             kill_joystick()
