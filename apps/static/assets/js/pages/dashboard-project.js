@@ -49,6 +49,7 @@ document.querySelector('.bs-tre-button-deconnexion').addEventListener("click", f
 
 
             HideShowConnexion();
+            HideShowTestConnexion()
             HideShowDeconnexion();
             //eCountUpClock(timer);
             document.getElementById("countup").innerHTML = hour + ":" + minute + ":" + updSecond;
@@ -87,7 +88,7 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
         /*if (num_mission.value !== "" || ip_raspb.value !== "" || radioValue.value !== "") {
           console.log("test check value")
         }*/
-        // Use the input field values and the selected radio input value as required
+       
         console.log(`Num mission: ${num_mission}, ip raspb: ${ip_raspb}, Radio Value: ${radioValue}`);
         const choix = radioValue;
         const IP = ip_raspb;
@@ -101,10 +102,18 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
               document.getElementById("Statut connexion").innerHTML = Statut;
              
               HideShowConnexion();
+              HideShowTestConnexion()
               HideShowDeconnexion();
               CountUpClock();
 
               Post("connexion",{"mode" : "test",  "information" : {}})
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Vous avez été connecté avec succès',
+                showConfirmButton: false,
+                timer: 1500
+              })
               //Post("Connexion","Information","NumMission",NumMission)
           } else if( choix == "dégradé") {
             Post("connexion",{"mode" : "dégradé",  "information" : {}})
@@ -196,10 +205,7 @@ const valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_10 = await PostTest("stockage",{"nouveau_stockage" : "frotti10", "emplacement" : {"stockage1" : stockage1, 
-"stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
-"stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
-"stockage10" : stockage10, "stockage11" : stockage11}});
+const valeur_Test_stockage_10 = await u
 const valeur_Test_commande_commande_numerique = await PostTest("commande",{"mode" : "commande_numerique", "commande_numerique" : {}});
 const valeur_Test_commande_joystick = await PostTest("commande",{"mode" : "joystick", "commande_numerique" : {}});
 const valeur_Test_commande_bras_maitre = await PostTest("commande",{"mode" : "bras_maitre", "commande_numerique" : {}});
@@ -235,8 +241,22 @@ if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel
   && Test_stockage_1 == true && Test_stockage_2 == true && Test_stockage_3 == true && Test_stockage_4 == true && Test_stockage_5 == true && Test_stockage_6 == true
   && Test_stockage_7 == true && Test_stockage_8 == true && Test_stockage_9 == true && Test_stockage_10 == true){
     console.log("Tout est ok")
+    Swal.fire({
+      position: 'top-end',
+      icon: 'success',
+      title: 'Toutes les trames fonctionnent correctement',
+      showConfirmButton: false,
+      timer: 1500
+    })
   } else {
     console.log("Tout est PAS ok")
+               Swal.fire({
+                position: 'top-end',
+                icon: 'error',
+                title: 'Vous avez été déconnecté avec succès',
+                showConfirmButton: false,
+                timer: 1500
+              })
   }
 
 }
@@ -279,6 +299,15 @@ function PostIHM(IP) {
 // Afficher ou Cacher des bouttons
 function HideShowConnexion() {
     var x = document.getElementById("connexion");
+    if (x.style.display === "none") {
+      x.style.display = "block";
+    } else {
+      x.style.display = "none";
+    }
+  }
+
+  function HideShowTestConnexion() {
+    var x = document.getElementById("test connexion");
     if (x.style.display === "none") {
       x.style.display = "block";
     } else {
@@ -476,8 +505,18 @@ window.fakeLoad = function fakeLoad() {
                 document.getElementById("Statut connexion").innerHTML = Statut;
                
                 HideShowConnexion();
+                HideShowTestConnexion()
                 HideShowDeconnexion();
                 CountUpClock()
+
+                Post("connexion",{"mode" : "test",  "information" : {}})
+              Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Vous avez été connecté avec succès',
+                showConfirmButton: false,
+                timer: 1500
+              })
             }
             if (curValue >= 110) {
                 // Clean up the interval.
@@ -504,6 +543,7 @@ document.querySelector('.stockage11').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('emplacement','1')
     } else {
         
   }
@@ -519,6 +559,7 @@ document.querySelector('.stockage10').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','10')
     } else {
         
   }
@@ -534,6 +575,7 @@ document.querySelector('.stockage9').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','9')
     } else {
         
   }
@@ -549,6 +591,7 @@ document.querySelector('.stockage8').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','8')
     } else {
         
   }
@@ -564,6 +607,7 @@ document.querySelector('.stockage7').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','7')
     } else {
         
   }
@@ -579,6 +623,7 @@ document.querySelector('.stockage6').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','6')
     } else {
         
   }
@@ -594,6 +639,7 @@ document.querySelector('.stockage5').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','5')
     } else {
         
   }
@@ -609,6 +655,7 @@ document.querySelector('.stockage4').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','4')
     } else {
         
   }
@@ -624,6 +671,7 @@ document.querySelector('.stockage3').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','3')
     } else {
         
   }
@@ -639,6 +687,7 @@ document.querySelector('.stockage2').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','2')
     } else {
         
   }
@@ -654,10 +703,27 @@ document.querySelector('.stockage1').addEventListener("click", function () {
     "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
     "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
     "stockage10" : stockage10, "stockage11" : stockage11}})
+    swalfire_stockage('stockage','1')
     } else {
         
   }
 });
+
+function swalfire_stockage(type,id_stockage) {
+  if (type == 'stockage'){
+    titre = 'Vous avez sélectionné le stockage '+id_stockage
+    }
+  else if (type == 'emplacement') {
+    titre = 'Vous avez sélectionné l\'emplacement '+id_stockage
+  }
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: titre,
+    showConfirmButton: false,
+    timer: 1500
+  })
+}
 
 document.querySelector('.bras-maitre-commande').addEventListener("click", function () {
 
@@ -672,6 +738,13 @@ document.querySelector('.bras-maitre-commande').addEventListener("click", functi
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({'bras maitre commande' : 'go'})
+            })
+            Swal.fire({
+              position: 'top-end',
+              icon: 'success',
+              title: 'Commande du bras maitre envoyé avec succès',
+              showConfirmButton: false,
+              timer: 1500
             })
 
 });
@@ -720,6 +793,13 @@ document.querySelector('.bs-tre-button-radio3').addEventListener("click", functi
     y.style.display = "none";
     
   }
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Vous avez sélectionné avec succès la commande numérique',
+    showConfirmButton: false,
+    timer: 2500
+  })
 
   
 
@@ -728,6 +808,7 @@ document.querySelector('.bs-tre-button-radio3').addEventListener("click", functi
 document.querySelector('.bs-tre-button-radio2').addEventListener("click", function () {
 
   Post("commande",{"mode" : "joystick", "commande_numerique" : {}})
+
   var x = document.getElementById("commande numérique");
   if (x.style.display === "none") {
     x.style.display = "block";
@@ -745,6 +826,13 @@ document.querySelector('.bs-tre-button-radio2').addEventListener("click", functi
     
   }
 
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Vous avez sélectionné avec succès la commande par joystick',
+    showConfirmButton: false,
+    timer: 2500
+  })
 
 
 });
@@ -770,7 +858,13 @@ document.querySelector('.bs-tre-button-radio1').addEventListener("click", functi
     y.style.display = "none";
     HideShowCommandeBrasMaitre();
   }
-
+  Swal.fire({
+    position: 'top-end',
+    icon: 'success',
+    title: 'Vous avez sélectionné avec succès la commande avec le bras maitre',
+    showConfirmButton: false,
+    timer: 2500
+  })
 
 
 });
@@ -785,6 +879,8 @@ function HideShowCommandeNumerique() {
     x.style.display = "none";
   }
 }
+
+
 function HideShowCommandeBrasMaitre() {
 
   
@@ -795,6 +891,7 @@ function HideShowCommandeBrasMaitre() {
     x.style.display = "none";
   }
 }
+
 
 
 
