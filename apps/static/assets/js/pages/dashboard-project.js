@@ -17,6 +17,7 @@ stockage8 = true;
 stockage9 = true;
 stockage10 = true;
 stockage11 = true;
+countclick = '0';
 
 window.onbeforeunload = function() {
 
@@ -49,9 +50,17 @@ document.querySelector('.bs-tre-button-deconnexion').addEventListener("click", f
               document.getElementById("Statut connexion").innerHTML = Statut;
 
 
-            HideShowConnexion();
-            HideShowTestConnexion()
+            HideShowTestConnexion();
             HideShowDeconnexion();
+            EnableAll();
+            var z = document.getElementById("button joystick");
+            if (z.style.display === "none") {
+              z.style.display = "block";
+              HideShowCommandeButtonJoystick()
+            } else {
+              z.style.display = "none";
+    
+  }
             //eCountUpClock(timer);
             document.getElementById("countup").innerHTML = hour + ":" + minute + ":" + updSecond;
         }
@@ -103,7 +112,7 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
               document.getElementById("Statut connexion").innerHTML = Statut;
              
               HideShowConnexion();
-              HideShowTestConnexion()
+              
               HideShowDeconnexion();
               CountUpClock();
 
@@ -127,94 +136,104 @@ document.querySelector('.bs-tre-button-connexion').addEventListener("click", fun
 
   })()
 });
+
 //Boutton testant toutes les requête vers la raspberry pi
 document.querySelector('.bs-tre-button-test-connexion').addEventListener("click", function () {
-  
-  Test_connexion_mode_deconnexion = false
-  Test_connexion_mode_opérationnel = false
-  Test_connexion_mode_test = false
-  Test_connexion_mode_dégradé = false
-  Test_commande_numerique_pince_true = false
-  Test_commande_numerique_pince_false = false
-  Test_commande_numerique_pince_stop = false
-  Test_commande_numerique_eclairage_true = false
-  Test_commande_numerique_eclairage_false = false
-  Test_stockage_echantillon = false
-  Test_stockage_1= false
-  Test_stockage_2= false
-  Test_stockage_3= false
-  Test_stockage_4= false
-  Test_stockage_5= false
-  Test_stockage_6= false
-  Test_stockage_7= false
-  Test_stockage_8= false
-  Test_stockage_9= false
-  Test_stockage_10= false
-  
-  Test_commande_commande_numerique = false
-  Test_commande_joystick = false
-  Test_commande_bras_maitre = false
+
+
+  var Test_connexion_mode_deconnexion = false
+  var Test_connexion_mode_opérationnel = false
+  var Test_connexion_mode_test = false
+  var Test_connexion_mode_dégradé = false
+  var Test_commande_numerique_pince_true = false
+  var Test_commande_numerique_pince_false = false
+  var Test_commande_numerique_pince_stop = false
+  var Test_commande_numerique_eclairage_true = false
+  var Test_commande_numerique_eclairage_false = false
+  var Test_stockage_echantillon = false
+  var Test_stockage_1= false
+  var Test_stockage_2= false
+  var Test_stockage_3= false
+  var Test_stockage_4= false
+  var Test_stockage_5= false
+  var Test_stockage_6= false
+  var Test_stockage_7= false
+  var Test_stockage_8= false
+  var Test_stockage_9= false
+  var Test_stockage_10= false 
+  var Test_commande_commande_numerique = false
+  var Test_commande_joystick = false
+  var Test_commande_bras_maitre = false
 
 console.log('test connexion 2')
+
 async function testpost() {
+  Swal.fire({
+    position: 'top-end',
+    icon: 'info',
+    title: 'Veuillez patienter',
+    text : "Cette tâche peut prendre un certain temps",
+    showConfirmButton: false,
+    timer: 3000
+  })
 
 //initialisation de toutes les variables
-const valeur_Test_connexion_mode_deconnexion = await PostTest("connexion",{"mode" : "deconnexion", "information" : {}});
-const valeur_Test_connexion_mode_opérationnel = await PostTest("connexion",{"mode" : "opérationnel",  "information" : {}});
-const valeur_Test_connexion_mode_test = await PostTest("connexion",{"mode" : "test",  "information" : {}});
-const valeur_Test_connexion_mode_dégradé = await PostTest("connexion",{"mode" : "dégradé",  "information" : {}});
-const valeur_Test_commande_numerique_pince_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : true}});
-const valeur_Test_commande_numerique_pince_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : false}});
-const valeur_Test_commande_numerique_pince_stop =await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince_stop" : true}});
-const valeur_Test_commande_numerique_eclairage_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : true}});
-const valeur_Test_commande_numerique_eclairage_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : false}});
-const valeur_Test_stockage_echantillon = await PostTest("stockage",{"nouveau_stockage" : "echantillon1", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_connexion_mode_deconnexion = await PostTest("connexion",{"mode" : "deconnexion", "information" : {}});
+valeur_Test_connexion_mode_opérationnel = await PostTest("connexion",{"mode" : "opérationnel",  "information" : {}});
+valeur_Test_connexion_mode_test = await PostTest("connexion",{"mode" : "test",  "information" : {}});
+valeur_Test_connexion_mode_dégradé = await PostTest("connexion",{"mode" : "dégradé",  "information" : {}});
+valeur_Test_commande_numerique_pince_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : true}});
+valeur_Test_commande_numerique_pince_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince" : false}});
+valeur_Test_commande_numerique_pince_stop =await PostTest("commande",{"mode" : "", "commande_numerique" : {"pince_stop" : true}});
+valeur_Test_commande_numerique_eclairage_true = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : true}});
+valeur_Test_commande_numerique_eclairage_false = await PostTest("commande",{"mode" : "", "commande_numerique" : {"eclairage" : false}});
+valeur_Test_stockage_echantillon = await PostTest("stockage",{"nouveau_stockage" : "echantillon1", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_1 = await PostTest("stockage",{"nouveau_stockage" : "frotti1", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_1 = await PostTest("stockage",{"nouveau_stockage" : "frotti1", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_2 = await PostTest("stockage",{"nouveau_stockage" : "frotti2", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_2 = await PostTest("stockage",{"nouveau_stockage" : "frotti2", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_3 = await PostTest("stockage",{"nouveau_stockage" : "frotti3", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_3 = await PostTest("stockage",{"nouveau_stockage" : "frotti3", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_4 = await PostTest("stockage",{"nouveau_stockage" : "frotti4", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_4 = await PostTest("stockage",{"nouveau_stockage" : "frotti4", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_5 = await PostTest("stockage",{"nouveau_stockage" : "frotti5", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_5 = await PostTest("stockage",{"nouveau_stockage" : "frotti5", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_6 = await PostTest("stockage",{"nouveau_stockage" : "frotti6", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_6 = await PostTest("stockage",{"nouveau_stockage" : "frotti6", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_7 = await PostTest("stockage",{"nouveau_stockage" : "frotti7", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_7 = await PostTest("stockage",{"nouveau_stockage" : "frotti7", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_8 = await PostTest("stockage",{"nouveau_stockage" : "frotti8", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_8 = await PostTest("stockage",{"nouveau_stockage" : "frotti8", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "frotti9", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_9 = await PostTest("stockage",{"nouveau_stockage" : "frotti9", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_stockage_10 = await PostTest("stockage",{"nouveau_stockage" : "frotti10", "emplacement" : {"stockage1" : stockage1, 
+valeur_Test_stockage_10 = await PostTest("stockage",{"nouveau_stockage" : "frotti10", "emplacement" : {"stockage1" : stockage1, 
 "stockage2" : stockage2, "stockage3" : stockage3, "stockage4" : stockage4, "stockage5" : stockage5,
 "stockage6" : stockage6, "stockage7" : stockage7, "stockage8" : stockage8, "stockage9" : stockage9,
 "stockage10" : stockage10, "stockage11" : stockage11}});
-const valeur_Test_commande_commande_numerique = await PostTest("commande",{"mode" : "commande_numerique", "commande_numerique" : {}});
-const valeur_Test_commande_joystick = await PostTest("commande",{"mode" : "joystick", "commande_numerique" : {}});
-const valeur_Test_commande_bras_maitre = await PostTest("commande",{"mode" : "bras_maitre", "commande_numerique" : {}});
+valeur_Test_commande_commande_numerique = await PostTest("commande",{"mode" : "commande_numerique", "commande_numerique" : {}});
+valeur_Test_commande_joystick = await PostTest("commande",{"mode" : "joystick", "commande_numerique" : {}});
+valeur_Test_commande_bras_maitre = await PostTest("commande",{"mode" : "bras_maitre", "commande_numerique" : {}});
 
 
 Test_connexion_mode_deconnexion = (valeur_Test_connexion_mode_deconnexion == "ok");
@@ -248,29 +267,99 @@ if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel
   && Test_stockage_7 == true && Test_stockage_8 == true && Test_stockage_9 == true && Test_stockage_10 == true){
     console.log("Tout est ok")
     HideShowConnexion();
+    HideShowTestConnexion()
     Swal.fire({
       position: 'top-end',
       icon: 'success',
       title: 'Toutes les trames fonctionnent correctement',
       showConfirmButton: false,
-      timer: 1500
+      timer: 3000
     })
   } else {
-
+    console.log('var : ' + Test_connexion_mode_deconnexion)
     console.log("Tout est PAS ok")
+    //printFalsyValues(Test_connexion_mode_deconnexion,Test_connexion_mode_opérationnel,Test_connexion_mode_test);
+    printFalsyValues(
+      { name: 'Test_connexion_mode_deconnexion', value: Test_connexion_mode_deconnexion },
+      { name: 'Test_connexion_mode_opérationnel', value: Test_connexion_mode_opérationnel },
+      { name: 'Test_connexion_mode_test', value: Test_connexion_mode_test },
+      { name: 'Test_connexion_mode_dégradé', value: Test_connexion_mode_dégradé },
+
+      { name: 'Test_commande_numerique_pince_true', value: Test_commande_numerique_pince_true },
+      { name: 'Test_commande_numerique_pince_false', value: Test_commande_numerique_pince_false },
+      { name: 'Test_commande_numerique_pince_stop', value: Test_commande_numerique_pince_stop },
+      { name: 'Test_commande_numerique_eclairage_true', value: Test_commande_numerique_eclairage_true },
+      { name: 'Test_commande_numerique_eclairage_false', value: Test_commande_numerique_eclairage_false },
+      { name: 'Test_stockage_echantillon', value: Test_stockage_echantillon },
+      { name: 'Test_stockage_1', value: Test_stockage_1 },
+      { name: 'Test_stockage_2', value: Test_stockage_2 },
+      { name: 'Test_stockage_3', value: Test_stockage_3 },
+      { name: 'Test_stockage_4', value: Test_stockage_4 },
+      { name: 'Test_stockage_5', value: Test_stockage_5 },
+      { name: 'Test_stockage_6', value: Test_stockage_6 },
+      { name: 'Test_stockage_7', value: Test_stockage_7 },
+      { name: 'Test_stockage_8', value: Test_stockage_8 },
+      { name: 'Test_stockage_9', value: Test_stockage_9 },
+      { name: 'Test_stockage_10', value: Test_stockage_10 },
+      { name: 'Test_commande_commande_numerique', value: Test_commande_commande_numerique },
+      { name: 'Test_commande_joystick', value: Test_commande_joystick },
+      { name: 'Test_commande_bras_maitre', value: Test_commande_bras_maitre }
+            
+    );
+    
+
+    function printFalsyValues(...args) {
+      const falsyValues = [];
+      for (let i = 0; i < args.length; i++) {
+        const arg = args[i];
+        if (!arg.value) {
+          falsyValues.push(arg.name);
+        }
+      }
+      if (falsyValues.length > 0) {
+        console.log("The following values are falsy:");
+        console.log(falsyValues);
+        return falsyValues;
+      } else {
+        console.log("All values are truthy.");
+      }
+    }
                Swal.fire({
                 position: 'top-end',
                 icon: 'error',
                 title: 'Toutes les trames n\'ont pas été envoyé avec succès',
-                text : "",
+                text : "Erreur trames 1 (voir documentation, chapitre erreurs)",
                 showConfirmButton: false,
-                timer: 1500
+                timer: 3000
               })
   }
 
 }
-testpost();
+//testpost();
 
+// Create a promise that resolves after the specified time limit
+const timeoutPromise = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    reject(new Error('Timeout exceeded'));
+  }, 20000); // Timeout set to 20 seconds
+});
+
+// Use Promise.race() to run both promises and return the first one that resolves
+Promise.race([testpost(), timeoutPromise])
+  .then(result => {
+    console.log('test promise '+result); // Handle the result from the testpost function
+  })
+  .catch(error => {
+    console.log('test promise error '+error); // Handle the error (either from testpost or the timeout)
+    Swal.fire({
+      position: 'top-end',
+      icon: 'error',
+      title: 'Toutes les trames n\'ont pas été envoyé avec succès',
+      text : "Erreur trames 2 (voir documentation, chapitre erreurs)",
+      showConfirmButton: false,
+      timer: 3000
+    })
+  });
 
 /*if (Test_connexion_mode_deconnexion == true && Test_connexion_mode_opérationnel == true && Test_connexion_mode_test == true
   && Test_connexion_mode_dégradé == true && Test_commande_numerique_pince_true == true && Test_commande_numerique_pince_false == true
@@ -514,10 +603,10 @@ window.fakeLoad = function fakeLoad() {
                 document.getElementById("Statut connexion").innerHTML = Statut;
                
                 HideShowConnexion();
-                HideShowTestConnexion()
+                
                 HideShowDeconnexion();
                 CountUpClock()
-
+                EnableAll();
                 Post("connexion",{"mode" : "test",  "information" : {}})
               Swal.fire({
                 position: 'top-end',
@@ -899,7 +988,8 @@ document.querySelector('.bs-tre-button-radio1').addEventListener("click", functi
   Swal.fire({
     position: 'top-end',
     icon: 'success',
-    title: 'Vous avez sélectionné avec succès la commande avec le bras maitre',
+    title: 'Commande sélectionnée avec succès',
+    text: 'commande avec le bras maitre',
     showConfirmButton: false,
     timer: 2500
   })
@@ -1050,6 +1140,7 @@ function Get() {
 }
 
 function EnableAll() {
+  if (document.getElementById('btnradio1').disabled == true) {
   document.getElementById('btnradio1').disabled = false;
   document.getElementById('btnradio2').disabled = false;
   document.getElementById('btnradio3').disabled = false;
@@ -1072,7 +1163,31 @@ function EnableAll() {
   document.getElementById('stockage10').disabled = false;
   document.getElementById('stockage11').disabled = false;
   document.getElementById('Button bras maitre envoie').disabled = false;
-
+  } else {
+    console.log('disabled tout')
+    document.getElementById('btnradio1').disabled = true;
+  document.getElementById('btnradio2').disabled = true;
+  document.getElementById('btnradio3').disabled = true;
+  document.getElementById('btnradio_articulation').disabled = true;
+  document.getElementById('btnradio_vitesse').disabled = true;
+  document.getElementById('bouton ouvrir pince').disabled = true;
+  document.getElementById('bouton fermer pince').disabled = true;
+  document.getElementById('bouton stop pince').disabled = true;
+  document.getElementById('bouton allumer éclairage').disabled = true;
+  document.getElementById('bouton éteindre éclairage').disabled = true;
+  document.getElementById('stockage1').disabled = true;
+  document.getElementById('stockage2').disabled = true;
+  document.getElementById('stockage3').disabled = true;
+  document.getElementById('stockage4').disabled = true;
+  document.getElementById('stockage5').disabled = true;
+  document.getElementById('stockage6').disabled = true;
+  document.getElementById('stockage7').disabled = true;
+  document.getElementById('stockage8').disabled = true;
+  document.getElementById('stockage9').disabled = true;
+  document.getElementById('stockage10').disabled = true;
+  document.getElementById('stockage11').disabled = true;
+  document.getElementById('Button bras maitre envoie').disabled = true;
+  }
 
 
 }

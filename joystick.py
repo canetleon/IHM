@@ -55,13 +55,13 @@ def init_joystick(sensibilite,mode_joystick):
                                 event = events[0]
                                 
                                 print(json.dumps({"type" : "buttondown", "valeur" : event.dict}))
-                                r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"type" : "buttondown", "valeur" : event.dict}), headers=headers)
+                                r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"mode" : mode_joystick, "type" : "buttondown", "valeur" : event.dict}), headers=headers)
                                 print(r.text)
                                    
                         elif events[0].type == pygame.JOYBUTTONUP:
                                 event = events[0]
                                 print(json.dumps({"type" : "buttonup", "valeur" : event.dict}))
-                                r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"type" : "buttonup", "valeur" : event.dict}), headers=headers)
+                                r = requests.post("http://"+ip_rasp+":8000/com/joystick", data=json.dumps({"mode" : mode_joystick, "type" : "buttonup", "valeur" : event.dict}), headers=headers)
                                 print(r.text) 
                 
                 if stop_joystick:

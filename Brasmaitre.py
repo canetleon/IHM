@@ -34,6 +34,7 @@ def lance_bras_maitre():
                 headers = {'Content-Type': 'application/json', 'Accept':'application/json','Access-Control-Allow-Origin' : '*'}
                 data=json.dumps({"mode" : "bras_maitre", "valeur" : {"Base" : Phrase[0], "S1" : Phrase[1] , "S2" : Phrase[2] , "S3" : Phrase[3] , "S4" : Phrase[4] , "S5" : Phrase[5] , "Pince" : Phrase[6] }})
                 r = requests.post("http://"+ip_rasp+":8000/com/joystick", data , headers=headers)
+                t = requests.post("http://169.254.212.241:5000/brasmaitre", data , headers=headers)
                 print(data)
 
                 Phrase.clear()
